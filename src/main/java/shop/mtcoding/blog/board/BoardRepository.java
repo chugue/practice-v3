@@ -6,6 +6,8 @@ import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Repository
 public class BoardRepository {
@@ -25,7 +27,12 @@ public class BoardRepository {
         return board;
     }
 
-    public void findAll() {
+    public List<Board> findAll() {
+        String q = """
+                select b from Board b order by b.id desc
+                """;
+        Query query = em.createQuery(q, Board.class);
+        return query.getResultList();
 
     }
 }
