@@ -19,21 +19,20 @@ public class Board {
     private Integer id;
     private String title;
     private String content;
-    private String username;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+    private User user;  // em.find에서 조인이 일어난다.
 
     @CreationTimestamp // pc -> db (날짜주입)
     private Timestamp createdAt;
 
     @Builder
-    public Board(Integer id, String title, String content, String username, User user, Timestamp createdAt) {
+    public Board(Integer id, String title, String content, User user, Timestamp createdAt) {
         this.id = id;
         this.title = title;
         this.content = content;
-        this.username = username;
         this.user = user;
         this.createdAt = createdAt;
     }
+
 }
