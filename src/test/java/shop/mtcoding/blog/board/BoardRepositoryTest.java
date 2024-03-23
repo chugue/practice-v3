@@ -20,6 +20,22 @@ public class BoardRepositoryTest {
     private BoardRepository boardRepository;
 
     @Test
+    public void deleteById_test(){
+        // given
+        int id = 1;
+        // when
+        String q = """
+                delete from Board b where b.id = :id
+                """;
+        Query query = em.createQuery(q);
+        query.setParameter("id", id);
+        query.executeUpdate();
+        // then
+        System.out.println(boardRepository.findAll().size());
+
+    }
+
+    @Test
     public void randomQuery_test() {
         String q1 = "select b from Board b order by b.id desc";
         Query query = em.createQuery(q1, Board.class);
