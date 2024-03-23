@@ -9,7 +9,7 @@
         <div class="card-body">
             <form action="/board/save" method="post">
                 <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Enter username" name="username">
+                    <input type="text" class="form-control" placeholder="Enter username" name="username" value="{{user.username}}" disabled>
                 </div>
                 <div class="mb-3">
                     <input type="text" class="form-control" placeholder="Enter title" name="title">

@@ -5,6 +5,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import shop.mtcoding.blog.user.User;
 
 import java.util.List;
@@ -13,6 +14,11 @@ import java.util.List;
 @Repository
 public class BoardRepository {
     private final EntityManager em;
+
+    @Transactional
+    public void save (Board board){
+        em.persist(board);
+    }
 
     public List<Board> findAllV2 () {
         Query q1 = em.createQuery("select b from Board b order by b.id desc", Board.class);
