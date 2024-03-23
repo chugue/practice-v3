@@ -16,6 +16,13 @@ public class BoardRepository {
     private final EntityManager em;
 
     @Transactional
+    public void updateById (int id, BoardRequest.UpdateDTO reqDTO){
+        Board board = em.find(Board.class, id);
+        board.setTitle(reqDTO.getTitle());
+        board.setContent(reqDTO.getContent());
+    }
+
+    @Transactional
     public void deleteById(int id){
         String q = """
                 delete from Board b where b.id = :id

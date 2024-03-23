@@ -3,6 +3,7 @@ package shop.mtcoding.blog.board;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -18,6 +19,23 @@ public class BoardRepositoryTest {
     private EntityManager em;
     @Autowired
     private BoardRepository boardRepository;
+
+
+    @Test
+    public void updateById_test(){
+        // given
+        int id = 1;
+        BoardRequest.UpdateDTO reqDTO = new BoardRequest.UpdateDTO();
+        reqDTO.setTitle("안녕?");
+        reqDTO.setContent("헬로우!");
+        // when
+        Board board = em.find(Board.class, id);
+        board.setTitle(reqDTO.getTitle());
+        board.setContent(reqDTO.getContent());
+
+        // then
+        Assertions.assertThat(board.getTitle().equals(reqDTO.getTitle()));
+    }
 
     @Test
     public void deleteById_test(){
