@@ -5,11 +5,18 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Repository
 public class UserRepository {
     private final EntityManager em;
+
+    @Transactional
+    public User join(User user){
+        em.persist(user);
+        return user;
+    }
 
     public User findByUsernameAndPassword(UserRequest.LoginDTO reqDTO) {
         String q = """
