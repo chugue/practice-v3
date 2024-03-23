@@ -1,9 +1,11 @@
 package shop.mtcoding.blog.user;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 
@@ -12,6 +14,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class UserController {
     private final UserRepository userRepository;
     private final HttpSession session;
+
+    @PostMapping("/user/{id}/update")
+    public String updateById (@PathVariable Integer id, UserRequest.UpdateDTO reqDTO){
+        User user = userRepository.updateById(id, reqDTO);
+        User sessionUser = userRepository.findById(user.getId());
+        session.setAttribute("sessionUser", sessionUser);
+        return "redirect:/";
+    }
 
     @PostMapping("/join")
     public String join (UserRequest.JoinDTO reqDTO){
@@ -41,7 +51,10 @@ public class UserController {
     }
 
     @GetMapping("/user/update-form")
-    public String updateForm() {
+    public String updateForm(HttpServletRequest request) {
+        User sessionUser = (User)session.getAttribute("sessionUser");
+        request.setAttribute("user", sessionUser);
+
         return "user/update-form";
     }
 
